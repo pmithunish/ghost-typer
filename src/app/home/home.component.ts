@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { FormGroup, FormControl } from '@angular/forms';
+
 import {
   trigger,
   query,
@@ -31,8 +33,13 @@ import {
     ])
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  form = new FormGroup({
+    typestring: new FormControl()
+  });
   constructor() {}
 
-  ngOnInit() { }
+  ngOnInit() {}
+
+  ngOnDestroy() {}
 }
