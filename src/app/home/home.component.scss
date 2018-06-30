@@ -21,6 +21,29 @@
   }
 }
 
+.form-control {
+  width: 100%;
+}
+
+.mat-hint {
+  color: $accent-color;
+}
+
+#typings {
+  margin-top: 16px;
+}
+
+.list-content {
+  padding: 5px 0;
+  width: calc(70vw - 48px);
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
 @media only screen and (max-width: 768px) {
   @include small-container;
+  .list-content {
+    width: calc(95vw - 32px);
+  }
 }

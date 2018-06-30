@@ -5,6 +5,36 @@
         <div class="mat-headline">Ghost Typer</div>
       </mat-card-header>
       <mat-card-content>
+        <form [formGroup]="form" novalidate (ngSubmit)="addString()">
+          <mat-form-field class="form-control">
+            <input matInput placeholder="Typing string" formControlName="typestring">
+            <mat-error *ngIf="typestring.required">String is required</mat-error>
+            <mat-hint *ngIf="typestring.minlength" [style.color]="'red'" align="start">String must be at-least 10 characters.</mat-hint>
+            <mat-hint *ngIf="typestring.maxlength" [style.color]="'red'" align="start">String should not exceed 100 characters.</mat-hint>
+            <mat-hint align="end">{{typestring.length}} / 100</mat-hint>
+          </mat-form-field>
+          <mat-card-actions>
+            <button type="submit" mat-button [disabled]="formValid !== 'VALID'" color="accent">Add to Type Queue</button>
+            <button type="button" mat-button (click)="clearStrings()" color="primary">Clear Type Queue</button>
+          </mat-card-actions>
+        </form>
+        <mat-card-header>
+          <div class="mat-headline">Type Queue
+          </div>
+        </mat-card-header>
+        <div class="list" *ngIf="!viewStrings.length">
+          <mat-divider></mat-divider>
+          <div class="list-content">empty</div>
+          <mat-divider></mat-divider>
+        </div>
+        <div class="list" *ngFor="let typing of viewStrings">
+          <mat-divider></mat-divider>
+          <div class="list-content">{{ typing }}</div>
+          <mat-divider></mat-divider>
+        </div>
+        <mat-card-header>
+          <div id="typings" class="mat-headline">Typing...</div>
+        </mat-card-header>
         <div class="mat-body-strong">
           <app-ghost-typer [typings]="typings"></app-ghost-typer>
         </div>
@@ -16,7 +46,11 @@
       </mat-card-header>
       <mat-card-content>
         <div>
-          Add any specific instructions you want viewers to follow
+          <ul>
+            <li>The strings must be atleast 10 characters long and should not exceed 100 characters.</li>
+            <li>The typer loops over the type queue infinitely.</li>
+            <li>The type queue at max can hold only 5 strings.</li>
+          </ul>
         </div>
       </mat-card-content>
     </mat-card>
@@ -28,12 +62,16 @@
       <mat-card-content>
         <div>
           Handcrafted with ♥ by
-          <a id="links" href="https://pmithunish.com" target="_blank" rel="noopener">Mithunish Prabhakarn</a> from India.
+          <a id="links" href="https://pmithunish.com" target="_blank" rel="noopener">Mithunish Prabhakarn</a> from India. Just a fun project get my hands dirty with RxJS library. Later found there
+          is a library in JS with similar concept and more robust features set. If you want to add similar component to your
+          website take a look at
+          <a id="links" href="https://mattboldt.com/demos/typed-js/" target="_blank" rel="noopener">typed.js</a> by
+          <a id="links" href="https://mattboldt.com/" target="_blank" rel="noopener">Matt Boldt</a>
         </div>
       </mat-card-content>
       <mat-card-actions>
         <a href="https://pmithunish.com" target="_blank" rel="noopener" mat-button color="accent">Check My Website!</a>
-        <a target="_blank" rel="noopener" mat-button color="primary">Action Button 1</a>
+        <a href="https://mattboldt.com/demos/typed-js/" target="_blank" rel="noopener" mat-button color="primary">Typed.JS</a>
       </mat-card-actions>
     </mat-card>
 

@@ -11,13 +11,25 @@ import { AppRoutingModule } from './app-routing.module';
 import {
   MatButtonModule,
   MatCardModule,
-  MatIconModule
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDividerModule,
+  MatListModule
 } from '@angular/material';
 import { HomeModule } from './home/home.module';
 
 const Components = [AppComponent, HomeComponent, PageNotFoundComponent];
 
-const MaterialModules = [MatButtonModule, MatCardModule, MatIconModule];
+const MaterialModules = [
+  MatButtonModule,
+  MatCardModule,
+  MatIconModule,
+  MatFormFieldModule,
+  MatInputModule,
+  MatDividerModule,
+  MatListModule
+];
 
 @NgModule({
   declarations: Components,

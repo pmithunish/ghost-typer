@@ -1,7 +1,17 @@
 import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 
-import { interval, of, from, Observable } from 'rxjs';
-import { map, concatMap, scan, take, delay, finalize } from 'rxjs/operators';
+import { interval, of, from, Observable, Subscription } from 'rxjs';
+import {
+  map,
+  concatMap,
+  scan,
+  take,
+  delay,
+  finalize,
+  takeWhile,
+  takeUntil,
+  mapTo
+} from 'rxjs/operators';
 
 const enum TypewriterConstants {
   CURSOR_BLINK_INTERVAL = 600,
@@ -17,25 +27,23 @@ const enum TypewriterConstants {
 })
 export class GhostTyperComponent implements OnInit, OnDestroy {
   @Input() typings: Array<string>;
-  result$: Observable<any>;
+  oldtypings = this.typings;
+  typingSubscription: Subscription;
+  innerSubscription: Subscription;
+  result$: Observable<string>;
   cursor$: Observable<boolean>;
+  iterableDiffer: any;
+  result: string;
+
   constructor() {}
 
   ngOnInit() {
-    if (this.typings === undefined) {
-      this.typings = [
-        'Beautiful Code.Beautiful Code.',
-        'Frontend Javascript.Frontend Javascript.',
-        'Backend Javascript.Backend Javascript.',
-        'Database Queries.Database Queries.',
-        'Scalable Web Apps.Scalable Web Apps.',
-        'Technical Documentations.Technical Documentations.'
-      ];
+    if (this.typings === undefined || !this.typings.length) {
+      setTimeout(() => this.typing(), 2000);
     }
     this.cursor$ = interval(TypewriterConstants.CURSOR_BLINK_INTERVAL).pipe(
       map(val => this.isEven(val))
     );
-    setTimeout(() => this.typing(), 2000);
   }
 
   typing() {
